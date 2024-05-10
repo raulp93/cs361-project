@@ -1,5 +1,6 @@
 import sys
 import time
+from game import *
 
 
 # citation for slowPrint function
@@ -18,7 +19,7 @@ def slowPrint(string, speed=0.02):
 def get_input():
     """prompts the user to enter something"""
 
-    prompt1 = "Please enter one of thoe following: 'new', 'history': "
+    prompt1 = "Please enter one of the following: 'new', 'history': "
 
     slowPrint(prompt1)
     user_input = input()
@@ -26,9 +27,63 @@ def get_input():
     return user_input
 
 
-def game():
+def start_new_game(username):
+    """handles the starting new game logic"""
 
-    Greeting = "\n\nGreetings and welcome to my game of rock-paper-scissors "\
+    new_game = game(username)
+    slowPrint("Alright " + username + ", How many rounds would you like to play? ")
+    rounds = int(input())
+    # must add data validation
+    new_game.set_rounds(rounds)
+
+    while new_game.game_status is True:
+
+        choice = input(" Enter rock/paper/scissors: ")
+
+        if choice == 'rock':
+            cp_choice = new_game.rock()
+
+        elif choice == 'paper':
+            cp_choice = new_game.paper()
+        
+        else:
+             cp_choice = new_game.scissors()
+
+        slowPrint('\nYou chose: ' + new_game.player_choice)
+        slowPrint('\nOpponent Chose: ' + cp_choice)
+
+        if new_game.round_status == "won":
+            slowPrint("\n" + new_game.player_name + ' ' + "won")
+            slowPrint("\n** queue hip-hop horns **\n")
+
+        elif new_game.round_status == "lost":
+            slowPrint("\nOpponent" + " " + "won" )
+            slowPrint("\nBetter luck next time...\n")
+        
+        else:
+            slowPrint("\n It was a Draw!\n")
+    
+    
+    slowPrint("\n And the winner is: " + new_game.winner + "!!\n")
+    slowPrint("The Score: \n" + new_game.player_name + ": " + str(new_game.rounds_won))
+    slowPrint("\n" + "Opponent: " + str(new_game.num_of_rounds - new_game.rounds_won - new_game.rounds_draw))
+    slowPrint("\nTotal Draws: " + str(new_game.rounds_draw))
+
+    slowPrint("\nWould you like to play again? Enter yes or no: ")
+    again = input()
+
+    if again == 'yes':
+        return 'yes'
+    
+    return 'no'
+
+    
+    
+
+
+def UI_func():
+
+    Greeting = "\n\nGreetings and welcome to my game of rock-paper-scissors. "\
                 "My name is Raul Preciado and I will guide you through this user interface.\n "\
                 "First things first... "
     
@@ -40,7 +95,7 @@ def game():
     greeting1 = "Ahh, very nice to meet you "
     greeting2 = ". I am glad you're here. \n"
 
-    instructions = "Pay close attention to this next part as it will give your the rundown \n"\
+    instructions = "Pay close attention to this next part as it will give you the rundown \n"\
                    "on all the different controls for this program."
     
     command1 = "To start a new game type in 'new'. It will then prompt you to enter how many rounds you'd like to play.\n"
@@ -61,13 +116,23 @@ def game():
     for i in rules:
         slowPrint(i)
 
+   
+
     user_input = get_input()
 
-    if user_input.lower() == "new":
+    while user_input == "new" or user_input == 'yes':
+
+        user_input = start_new_game(user_name)
+
+        
+
+    
+        
 
 
 
 
+test = UI_func()
 
-# citation for printing slowly
-# https://stackoverflow.com/questions/66913084/print-slowly-in-terminal-python
+
+

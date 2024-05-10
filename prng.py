@@ -1,6 +1,8 @@
 import random
 import time
 
+print("prng.py is running...")
+
 
 while True:
 
@@ -10,7 +12,7 @@ while True:
     if request == "request":
         number = str(random.randint(1, 20))
 
-        with open("number-service.txt, 'w") as outfile:
+        with open("number-service.txt","w") as outfile:
                 outfile.write(number)
 
     time.sleep(1)

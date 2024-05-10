@@ -28,7 +28,7 @@ def get_comp_choice():
 
 class game:
 
-    def __init__(self, cp_name, player_name):
+    def __init__(self, player_name):
         """ Creates the game object that holds all the different parameters"""
 
         self.cp_name = 'computer'
@@ -39,6 +39,8 @@ class game:
         self.round_status = None
         self.winner = None
         self.rounds_won = 0
+        self.rounds_draw = 0
+        self.player_choice = None
 
     def set_rounds(self, num):
         """sets the number of rounds to be played"""
@@ -59,61 +61,94 @@ class game:
         """method that is called when a player chooses rock"""
         cp_choice = get_comp_choice()
 
-        choice = "rock"
+        self.player_choice = "rock"
 
-        if choice == cp_choice:
+        if self.player_choice == cp_choice:
             self.round_status = 'draw'
         
-        elif choice == 'paper':
+        elif cp_choice == 'paper':
             self.round_status = 'lost'
 
         else:
             self.round_status = 'won'
             self.rounds_won += 1
         
-        self.current_round += 1
+        self.adjust_rounds()
+
+        return cp_choice
 
 
-        
 
 
     def paper(self):
         """method that is called when a player chooses paper"""
         cp_choice = get_comp_choice()
 
-        choice = "paper"
+        self.player_choice = "paper"
 
-        if choice == cp_choice:
+        if self.player_choice == cp_choice:
             self.round_status = 'draw'
         
-        elif choice == 'scissors':
+        elif cp_choice == 'scissors':
             self.round_status = 'lost'
 
         else:
             self.round_status = 'won'
             self.rounds_won += 1
         
-        self.current_round += 1
+        self.adjust_rounds()
+
+        return cp_choice
 
 
     def scissors(self):
         """method used when a player chooses scissors"""
         cp_choice = get_comp_choice()
 
-        choice = "scissors"
+        self.player_choice = "scissors"
 
-        if choice == cp_choice:
+        if self.player_choice == cp_choice:
             self.round_status = 'draw'
         
-        elif choice == 'rock':
+        elif cp_choice == 'rock':
             self.round_status = 'lost'
 
         else:
             self.round_status = 'won'
             self.rounds_won += 1
         
-        self.current_round += 1
+        self.adjust_rounds()
+
+        return cp_choice
+
+    def determine_winner(self):
+        """ method to help determine winner"""
+
+        ratio = self.rounds_won / (self.num_of_rounds - self.rounds_draw) 
+
+        if ratio > 0.5:
+            self.winner = self.player_name
+        
+        elif ratio < 0.5:
+            self.winner = self.cp_name
+
+        else:
+            self.winner = "draw"
+
     
+    def adjust_rounds(self):
+        """handles the rounds for the game"""
+
+        self.current_round += 1
+
+        if self.round_status == 'draw':
+            self.rounds_draw += 1
+
+        if self.current_round == self.num_of_rounds:
+            self.game_status = False
+            self.determine_winner()
+    
+
 
 
     
