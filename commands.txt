@@ -1,0 +1,15 @@
+
+------------------------------------------------------------------------------------------------
+   COMMANDS:
+                                                                                       
+  STARTING A NEW GAME: to start a new game at any time, type in 'new' and hit enter.    
+  (entering new in the middle of a round will restart the current game)                 
+                                                                                        
+  VIEWING RESULTS: to view the results of the games you've played, type in 'results'.   
+                                                                                        
+  VIEWING COMMANDS: to view the possible commands, type in 'commands' and hit enter.    
+                                                                                        
+  VIEWING THE RULES: to view the rules at any time, type in 'rules' and hit enter.      
+                                                                                        
+------------------------------------------------------------------------------------------------
+

@@ -1,0 +1,19 @@
+------------------------------------------------------------------------------------------------
+
+HOW TO PLAY: 
+
+1) enter 'new' to start a game.
+2) enter how many rounds you'd like to play (must be a positive integer)
+3) enter your choice of rock, paper, or scissors when prompted
+
+Note: You can enter 'rules', 'commands', or 'new' at any time.
+
+WARNING: entering 'new' will stop the current game and start a new game.
+
+Rules of the Game: 
+
+Rock Beats Scissors --- A rock, when thrown hard enough can break a pair of scissors
+Scissors Beat Paper --- Clearly, scissors can cut a piece of paper
+Paper Beats Rock ------ A piece of paper can... wrap around a rock
+
+-----------------------------------------------------------------------------------------------

@@ -124,6 +124,9 @@ class game:
     def determine_winner(self):
         """ method to help determine winner"""
 
+        if self.num_of_rounds - self.rounds_draw == 0:
+            self.winner = "draw"
+
         ratio = self.rounds_won / (self.num_of_rounds - self.rounds_draw) 
 
         if ratio > 0.5:
