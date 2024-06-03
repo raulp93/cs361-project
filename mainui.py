@@ -1,13 +1,8 @@
-import sys
-import time
-import asyncio
-import threading
-
-
-import webbrowser  
-# webbrowser.open(url, new=0, autoraise=True)
+import sys, time, threading
 
 from game import *
+from jsontotablefunc import tablepipeline
+
 
 
 # citation for slowPrint function
@@ -74,6 +69,8 @@ def check_input(user_input):
         
     elif (user_input.lower() == 'rock') or (user_input.lower() == 'paper') or (user_input.lower() == 'scissors'):
         return True
+    
+    
         
     
 def round_info(game, cp_choice):
@@ -103,7 +100,9 @@ def round_info(game, cp_choice):
         slowPrint("\n" + "Opponent: " + str(game.num_of_rounds - game.rounds_won - game.rounds_draw))
         slowPrint("\nTotal Draws: " + str(game.rounds_draw))
         A.join()
+        tablepipeline()
     B.join()
+    
   
     
 
