@@ -9,12 +9,12 @@ def get_comp_choice():
     """
     choices = ["rock", "paper", "scissors"]
 
-    with open("number-service.txt", 'w') as outfile:
-        outfile.write("request")
+    with open("C:\\Users\\raulp\\Documents\\CS361\\projectfile\\Random_Number_Generator\\Request.txt", 'w') as outfile:
+        outfile.write("Send a number")
 
-    time.sleep(1)     # gives the number service time to fulfill  the request
+    time.sleep(1.5)     # gives the number service time to fulfill  the request
 
-    with open("number-service.txt", "r") as infile:
+    with open("C:\\Users\\raulp\\Documents\\CS361\\projectfile\\Random_Number_Generator\\Request.txt", "r") as infile:
         num_str = infile.read()
     
     num_int = int(num_str)
@@ -22,6 +22,21 @@ def get_comp_choice():
 
     return choice
 
+
+def writer(theWhat):
+    """takes a string as a parameter and writes it to a text file"""
+
+    if theWhat == 'send results':
+        with open("request.txt", 'w') as outfile:
+            outfile.write("log results")
+        time.sleep(3)
+        # erases the contents of record.txt after the recording service gets the information from it
+        open("record.txt", 'w').close()
+        return
+
+
+    with open("record.txt", "a") as outfile:
+        outfile.write(theWhat)
 
 
 
@@ -41,6 +56,7 @@ class game:
         self.rounds_won = 0
         self.rounds_draw = 0
         self.player_choice = None
+        self.cp_choice = None
 
     def set_rounds(self, num):
         """sets the number of rounds to be played"""
@@ -59,14 +75,14 @@ class game:
 
     def rock(self):
         """method that is called when a player chooses rock"""
-        cp_choice = get_comp_choice()
+        self.cp_choice = get_comp_choice()
 
         self.player_choice = "rock"
 
-        if self.player_choice == cp_choice:
+        if self.player_choice == self.cp_choice:
             self.round_status = 'draw'
         
-        elif cp_choice == 'paper':
+        elif self.cp_choice == 'paper':
             self.round_status = 'lost'
 
         else:
@@ -75,21 +91,21 @@ class game:
         
         self.adjust_rounds()
 
-        return cp_choice
+        return self.cp_choice
 
 
 
 
     def paper(self):
         """method that is called when a player chooses paper"""
-        cp_choice = get_comp_choice()
+        self.cp_choice = get_comp_choice()
 
         self.player_choice = "paper"
 
-        if self.player_choice == cp_choice:
+        if self.player_choice == self.cp_choice:
             self.round_status = 'draw'
         
-        elif cp_choice == 'scissors':
+        elif self.cp_choice == 'scissors':
             self.round_status = 'lost'
 
         else:
@@ -98,19 +114,19 @@ class game:
         
         self.adjust_rounds()
 
-        return cp_choice
+        return self.cp_choice
 
 
     def scissors(self):
         """method used when a player chooses scissors"""
-        cp_choice = get_comp_choice()
+        self.cp_choice = get_comp_choice()
 
         self.player_choice = "scissors"
 
-        if self.player_choice == cp_choice:
+        if self.player_choice == self.cp_choice:
             self.round_status = 'draw'
         
-        elif cp_choice == 'rock':
+        elif self.cp_choice == 'rock':
             self.round_status = 'lost'
 
         else:
@@ -119,7 +135,7 @@ class game:
         
         self.adjust_rounds()
 
-        return cp_choice
+        return self.cp_choice
 
     def determine_winner(self):
         """ method to help determine winner"""
@@ -127,6 +143,10 @@ class game:
         if self.num_of_rounds - self.rounds_draw == 0:
             self.winner = "draw"
 
+        if self.rounds_won == 0:
+            self.winner = self.cp_name
+            return
+        
         ratio = self.rounds_won / (self.num_of_rounds - self.rounds_draw) 
 
         if ratio > 0.5:
@@ -150,6 +170,28 @@ class game:
         if self.current_round == self.num_of_rounds:
             self.game_status = False
             self.determine_winner()
+
+    def log_info(self, info):
+        """submits information to a json file after each round"""
+
+        if info == 'name':
+            writer(f"Name'{self.player_name}'")
+
+        elif info =="rounds":
+            rnds = str(self.num_of_rounds)
+            writer(f"Total Rounds'{rnds}'")
+
+        elif info == "round info":
+            the_score = f"Round {self.current_round}'{self.player_choice}, {self.cp_choice}'"
+            writer(the_score)
+
+        elif info == "winner":
+            writer(f"Winner'{self.winner}'")
+            time.sleep(2)
+            writer("send results")
+            
+
+        
     
 
 

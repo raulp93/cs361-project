@@ -93,9 +93,11 @@ def round_info(game, cp_choice):
     
     else:
         slowPrint("\n It was a Draw!\n")
+    
+    game.log_info("round info")
 
     if game.winner is not None:
-
+        game.log_info("winner")
         slowPrint("\nAnd the winner is: " + game.winner + "!!\n")
         slowPrint("The Score: \n" + game.player_name + ": " + str(game.rounds_won))
         slowPrint("\n" + "Opponent: " + str(game.num_of_rounds - game.rounds_won - game.rounds_draw))
@@ -108,12 +110,14 @@ def playgame(user_name):
     """handles the actual playing of the game"""
     #starts a new instance of the game class
     new_game = game(user_name)
-
+    
     slowPrint("Alright " + user_name + ", How many rounds would you like to play? ")
     rounds = int(input())
     # must add data validation
     new_game.set_rounds(rounds)
     rounds_played = 0
+    new_game.log_info("name")
+    new_game.log_info("rounds")
     #this while loop is meant to prompt the user to enter a choice for each round that is played
     while new_game.num_of_rounds > rounds_played:
 
@@ -126,19 +130,17 @@ def playgame(user_name):
         if status == False:
             return
         
-        if status == True:
-           
-            if user_input == 'rock':
-                cp_choice = new_game.rock()
+        elif choice == 'rock':
+            cp_choice = new_game.rock()
 
-            elif user_input == 'paper':
-                cp_choice = new_game.paper()
+        elif choice == 'paper':
+            cp_choice = new_game.paper()
+    
+        elif choice == 'scissors':
+            cp_choice = new_game.scissors()
         
-            else:
-                cp_choice = new_game.scissors()
-            
-            round_info(new_game, cp_choice)
-            rounds_played += 1
+        round_info(new_game, cp_choice)
+        rounds_played += 1
 
         
         
