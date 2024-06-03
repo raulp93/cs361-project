@@ -1,5 +1,7 @@
 import sys
 import time
+import asyncio
+import threading
 
 
 import webbrowser  
@@ -13,14 +15,11 @@ from game import *
 # Date Accessed: 5/8/24
 # Source: https://stackoverflow.com/questions/66913084/print-slowly-in-terminal-python
 
-def slowPrint(string, speed=0.02):
+def slowPrint(string, speed=0.01):
     for char in string:
         sys.stdout.write(char)
         sys.stdout.flush()
         time.sleep(speed)
-
-
-
 
 
 
@@ -94,14 +93,19 @@ def round_info(game, cp_choice):
     else:
         slowPrint("\n It was a Draw!\n")
     
-    game.log_info("round info")
-
+    B = threading.Thread(target=game.log_info, args=("round info",))
+    B.start()
     if game.winner is not None:
-        game.log_info("winner")
+        A = threading.Thread(target=game.log_info, args=("winner",))
+        A.start()
         slowPrint("\nAnd the winner is: " + game.winner + "!!\n")
         slowPrint("The Score: \n" + game.player_name + ": " + str(game.rounds_won))
         slowPrint("\n" + "Opponent: " + str(game.num_of_rounds - game.rounds_won - game.rounds_draw))
         slowPrint("\nTotal Draws: " + str(game.rounds_draw))
+        A.join()
+    B.join()
+  
+    
 
 
     
@@ -140,7 +144,9 @@ def playgame(user_name):
             cp_choice = new_game.scissors()
         
         round_info(new_game, cp_choice)
+
         rounds_played += 1
+
 
         
         
